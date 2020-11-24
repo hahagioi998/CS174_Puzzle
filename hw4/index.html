@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!--<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+	<title>puzzle</title>
+	<!-- <link rel="stylesheet" href="font/iconfont.css"> -->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+</head>
+<body>
+	<!-- 获取图片 -->
+	
+
+	<!-- 字体图标 -->
+<div style="display: none;" id="btn"></div> 
+
+	<div id="gameArea">
+   <h1>Commonity Jigsaw</h1>
+    <h2>NewImage:</h2>
+   <form id="upload" method="post" enctype="multipart/form-data">
+    
+	<input type="file" id="file" name="file">
+	
+	</form>
+	<button  onclick="btn()">upload</button>
+	
+		<!-- 游戏开始按钮 -->
+		<div style="visibility: hidden;" id="gameStart">点击开始</div>
+		<!-- 图片存放的区域 -->
+		<div id="imgArea"></div>
+	</div>
+	
+	
+</body>
+	<script src="puzzle.js"></script>
+	<script src="jquery.js"></script>
+	<script>
+	
+      	var puzzle = null;
+		// window.onload = function(){
+		    
+		//  puzzle = new Puzzle({
+		// 	// 当前等级
+		// 	leverNow:3,
+		// 	// 拼图区域大小
+		// 	imgAreaSize:360
+		// });
+		// puzzle.gameStart();
+
+		// $.get("up.php?data=1",function(result){
+
+		// 	if(result=="1"){
+		// 		alert("请先上传文件！再打开本网页");
+		// 	}else{
+
+		// 		  puzzle.imgUrl = result;
+		//     	  puzzle.imgSplit();
+		// 	}
+		   
+		//   });
+		
+     　
+　　 //}
+　　 
+　　      function btn(){
+            
+			$.ajax({
+			type : "post",
+			url : "up.php",
+			data :  new FormData($("#upload")[0]),
+			processData : false,
+			contentType : false,
+			success : function(data){
+				if (data=="error") {
+
+					alert("文件上传失败!  只支持png/jpg/gif 格式并且小于2mb");
+				}else{
+				alert("文件上传成功!");
+			    		$.get("up.php?data=1",function(result){
+
+            			if(result=="1"){
+            			
+            			}else{
+            			    
+            			    		 
+            			   puzzle = new Puzzle({
+                        			// 当前等级
+                        			leverNow:3,
+                        			// 拼图区域大小
+                        			imgAreaSize:360
+                        		});
+                        		puzzle.gameStart();
+            				 puzzle.imgUrl = result;
+		    	             puzzle.imgSplit();
+		    	             $("#gameStart").click();
+            			}
+            		   
+            		  });
+			}}
+		});
+        }
+
+	</script>
+</html>

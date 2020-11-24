@@ -1,6 +1,0 @@
-Title: 
-Member: 
-Description:
-    To Do:
-        1. Add monolog
-Discussion:
