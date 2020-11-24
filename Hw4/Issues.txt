@@ -1,0 +1,41 @@
+Members:
+1.Qianhui Fan 
+2.Zihao Lin 
+
+Issue1:
+Description:
+        0. check how to use composer - check live example on stackoverflow 2
+        1. install composer - download composer and make it usable globally 1
+        2. Add monolog - install monolog/monolog to this current project 2
+        
+Comment main ideas:
+    Start with easy components, doning some research
+----------------11/16/2020--------------------------------------------------------------
+Issue2:
+        3. fix dependency - add autoload.php to the files headers 1 
+Comment:
+    some wired bugs remain from yesterday, composer can't generate the autoload.php script 
+----------------11/17/2020--------------------------------------------------------------
+Issue3:
+        4. Start to create a simple php backend, fix bug in php backend - some cant properly retirive data from POST. 2 
+        5. create index.html - main page with css styling sheet 1
+Comment: 
+      Make sure the size of imageArea and cell is correct
+      fix some small bugs in main php backend, most of then are value name passing errors.
+----------------11/19/2020--------------------------------------------------------------
+Issue4:
+        7. create javascript scrpit - read image try to split image and generate random array 2
+        8. write js function to swap tiles - swap images randomly with some index. 1
+Comment: doing some testing with spliting images into individual tiles. 
+         start writing some swap function, and testing it.  
+         fix error of image not loading when js is added.
+----------------11/21/2020--------------------------------------------------------------
+Issue5:
+        9. create php backend to check for image type and size - add some helper function to check the format on server side 2
+        10. write php to write to active_image.txt - add some helper function to retrive the the permutation order 1
+        11. write php to save image to active_image.jpg - write some functions to preprocess the images. 1
+        12. write php to log file uploads - some remaining part of issue 11, linking the frontend part to the backend using ajax. 2
+Comment: most part of works are the hardest and tricky. doning lots of bug fixing. Testing with several pictures.
+----------------11/23/2020-------------------------------------------------------------------
+
+        

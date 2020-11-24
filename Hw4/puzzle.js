@@ -3,15 +3,10 @@ var Puzzle = function(option){
 	this._init(option);
 }
 Puzzle.prototype = {
-	// 初始化数据
 	_init:function(option){
-		// 当前等级
 		this.leverNow = option.leverNow <=2 ? 2 : option.leverNow || 2;
-		// 游戏等级(行，列存储)
 		this.leverArr = [this.leverNow,this.leverNow];
-		// 图片原始索引
 		this.imgOrigArr = [];
-		// 打乱的图片索引
 		this.imgRandomArr = [];
 
 	
@@ -65,38 +60,7 @@ Puzzle.prototype = {
 		}
 
 
-
 		this.inputObj.onchange = function(){
-
-			//document.forms["upload"].submit();
-            /*
-			$.ajax({
-			type : "post",
-			url : "up.php",
-			data :  new FormData($("#upload")[0]),
-			processData : false,
-			contentType : false,
-			success : function(data){
-				if (data=="error") {
-
-					alert("文件上传失败!  只支持png/jpg/gif 格式并且小于2mb");
-				}else{
-				alert("文件上传成功!");
-			    		$.get("up.php?data=1",function(result){
-
-            			if(result=="1"){
-            			
-            			}else{
-            				 self.imgUrl = result;
-            		    	 self.imgSplit();
-            			}
-            		   
-            		  });
-			}}
-		});*/
-
-			
-
 			
 		};
 	
@@ -197,18 +161,12 @@ Puzzle.prototype = {
 			}
 		}
 	},
-	// 打乱图片索引
+	// create ramdom array for graph
 	randomArr:function(){
-		// 清空乱序数组
 		this.imgRandomArr = [];
-		// 判断原来的数组是否和乱序数组一样
 		var _flag = true;
-		// 遍历原始索引
 		for(var i=0,l=this.imgOrigArr.length;i<l;i++){
-			// 获取从0到数组长度之间的一个索引值
 			var order = Math.floor(Math.random()*this.imgOrigArr.length);
-			// 如果乱序数组中没有值就直接添加
-			// 否则就在这个乱序数组中找对应的随机数的索引，找不到就添加,找到就继续随机
 			if(this.imgRandomArr.length>0){
 				while(this.imgRandomArr.indexOf(order) >-1){
 					order = Math.floor(Math.random()*this.imgOrigArr.length);
@@ -217,9 +175,8 @@ Puzzle.prototype = {
 			this.imgRandomArr.push(order);
 		}
 
-		// 判断乱序数组和原始数组是否一样
+		// check if the ramdom array is the same as initial array
 		if(this.imgRandomArr.length === this.imgOrigArr.length){
-			// 遍历数组
 			for(var i=0,l=this.imgOrigArr.length;i<l;i++){
 				if(this.imgRandomArr[i] != this.imgOrigArr[i]){
 					_flag = false;
@@ -232,17 +189,15 @@ Puzzle.prototype = {
 			_flag = true;
 		}
 
-		// 返回值为true的话 就代表原始数组和乱序数组一致，重新打乱数组
+		// 
 		if(_flag){
 			this.randomArr();
 		}
 	},
-	//让小格子根据乱序数组移动到对应的位置
+	//move tile to the index in imgRandomArr
 	cellOrder:function(){
-		// 拿到当前的this
 		var _self = this;
-		// 遍历所有的小格子
-		
+
 		this.imgCells.forEach(function(element,index){
 			element.id = _self.imgRandomArr[index];
 			element.style.left = _self.imgRandomArr[index] % _self.leverArr[1] * _self.cellWidth+'px';
@@ -250,22 +205,13 @@ Puzzle.prototype = {
 			
 		});
 	},
-	// 交换两次点击的图片位置
+	// swap tiles
 	cellExchange:function(from,to){
-		// 因为图片此时的排序是根据 以图片的索引值为索引
-		// 在乱序的数组中根据相对应的索引取出的值作为当前图片的排序位置的
-		// 因此根据from to这两个值作为索引，就能在乱序数组中得到当前图片是第几张
-
-		// 求出from的图片 是第几行第几列
-		// 当前是第几张图片 / 一行多少列 然后取整 就是当前属于第几行
 		var _fromRow = Math.floor(this.imgRandomArr[from] / this.leverArr[1]);
-		// 当前是第几张图片 % 一行多少列 然后取余 就是当前属于第几列
 		var _fromCol = this.imgRandomArr[from] % this.leverArr[1];
-		// 求出to的图片 是第几张第几列
 		var _toRow = Math.floor(this.imgRandomArr[to] / this.leverArr[1]);
 		var _toCol = this.imgRandomArr[to] % this.leverArr[1];
 
-		// 移动两张图片
 		var idtmp = this.imgCells[from].id;
 		var idtmpx = this.imgCells[to].id;
 
@@ -278,13 +224,11 @@ Puzzle.prototype = {
 		this.imgCells[to].style.left = _fromCol*this.cellWidth + 'px';
 		this.imgCells[to].style.top = _fromRow*this.cellHeight + 'px';
 
-		// 将乱序数组中的两个值交换位置
-		// 定义一个临时变量来实现交换顺序
 		var _temp = this.imgRandomArr[from];
 		this.imgRandomArr[from] = this.imgRandomArr[to];
 		this.imgRandomArr[to] = _temp;
 
-		//如果乱序数组和原数组一致，则表示拼图已完成
+		//
 		if(this.imgOrigArr.toString() === this.imgRandomArr.toString()){
 			this.success();
 		}	
