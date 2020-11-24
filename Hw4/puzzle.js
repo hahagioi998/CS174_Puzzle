@@ -324,16 +324,15 @@ Puzzle.prototype = {
 
 		//如果乱序数组和原数组一致，则表示拼图已完成
 		if(this.imgOrigArr.toString() === this.imgRandomArr.toString()){
-			// 调用成功方法
 			this.success();
 		}	
 	},
-	// 成功
+	// success
 	success:function(){
 		// 让开始游戏可以继续点击
 		this.hasStart = 0;
 		setTimeout(function(){
-			alert('已完成');
+			alert('Puzzle solved successfully');
 			$("#gameStart").click();
 		},600);
 	}
