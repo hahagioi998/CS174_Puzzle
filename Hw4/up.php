@@ -13,7 +13,7 @@ header('access-Control-Allow-Origin:*');
 if($id == "1"){
 
      $file = "src/resources/active_image.jpg";
-     //判断文件是否存在
+     //check file existence
     if(file_exists($file)){
         
         if($fp = fopen($file,"rb", 0))
@@ -21,7 +21,7 @@ if($id == "1"){
             $gambar = fread($fp,filesize($file));
             fclose($fp);
             $base64 = base64_encode($gambar);
-            // 输出
+            // output base64
             $encode = 'data:image/jpg/png/gif;base64,' . $base64;
             
             echo $encode;
@@ -33,7 +33,7 @@ if($id == "1"){
     
 }else if($id == "2"){
     
-      //数组写入文件
+      //write the order
       $arr=$_REQUEST['arr'];
       $da = explode("-",$arr);
       writetxt($da);
@@ -45,11 +45,11 @@ else{
     
 
 
-// 允许上传的图片后缀
+// server side picture format check
 $allowedExts = array("gif", "jpg", "png");
 $temp = explode(".", $_FILES["file"]["name"]);
 //echo $_FILES["file"]["size"];
-$extension = end($temp);     // 获取文件后缀名
+$extension = end($temp);     // get file extension
 //echo  $_FILES["file"]["name"];
 //echo $_FILES["file"]["type"];
 
@@ -59,7 +59,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
 || ($_FILES["file"]["type"] == "image/pjpeg")
 || ($_FILES["file"]["type"] == "image/x-png")
 || ($_FILES["file"]["type"] == "image/png"))
-&& ($_FILES["file"]["size"] < 2097152)   // 小于 2MB
+&& ($_FILES["file"]["size"] < 2097152)   // file size< 2MB
 && in_array($extension, $allowedExts))
 {
     if ($_FILES["file"]["error"] > 0)
@@ -68,31 +68,29 @@ if ((($_FILES["file"]["type"] == "image/gif")
     }
     else
     {
-        echo "上传文件名: " . $_FILES["file"]["name"] . "<br>";
-        echo "文件类型: " . $_FILES["file"]["type"] . "<br>";
-        echo "文件大小: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-        echo "文件临时存储的位置: " . $_FILES["file"]["tmp_name"] . "<br>";
+        echo "File Name: " . $_FILES["file"]["name"] . "<br>";
+        echo "File Type: " . $_FILES["file"]["type"] . "<br>";
+        echo "File Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
         
         
      
         
          $imgdata = resize_image($_FILES["file"]["name"],$_FILES["file"]["tmp_name"],360,360);
          
-         //保存文件
+         //Save picture
          imagejpeg($imgdata, 'src/resources/active_image.jpg');
          
          
-        // 创建日志服务
+
         $logger = new Logger('my_logger');
         
-        // 添加一些处理器
         $logger->pushHandler(new StreamHandler(__DIR__.'/src/resources/jigsaw.log', Logger::DEBUG));
         $logger->pushHandler(new FirePHPHandler());
         
-        // 写入日志
-        $logger->info( "上传文件名: " . $_FILES["file"]["name"]);
-        $logger->info( "文件类型: " . $_FILES["file"]["type"]);
-        $logger->info( "文件大小: " . ($_FILES["file"]["size"] / 1024));
+
+        $logger->info( "File Name: " . $_FILES["file"]["name"]);
+        $logger->info( "File Type: " . $_FILES["file"]["type"]);
+        $logger->info( "File Size: " . ($_FILES["file"]["size"] / 1024));
         $logger->info( "---------------------------------------------------------------------------------------");
         
         
@@ -100,21 +98,6 @@ if ((($_FILES["file"]["type"] == "image/gif")
         $cars=array(0,1,2,3,4,5,6,7,8);
         writetxt($cars);
       
-                 
-         /**
-        
-        // 判断当前目录下的 upload 目录是否存在该文件
-        // 如果没有 upload 目录，你需要创建它，upload 目录权限为 777
-        if (file_exists("src/resources/" . $_FILES["file"]["name"]))
-        {
-            echo $_FILES["file"]["name"] . " 文件已经存在。 ";
-        }
-        else
-        {
-            // 如果 upload 目录不存在该文件则将文件上传到 upload 目录下
-            move_uploaded_file($_FILES["file"]["tmp_name"], "src/resources/" . $_FILES["file"]["name"]);
-            echo "文件存储在: " . "src/resources/" . $_FILES["file"]["name"];
-        }*/
     }
 }
 else

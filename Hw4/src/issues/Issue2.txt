@@ -1,0 +1,26 @@
+Members:
+1.Qianhui Fan 
+2.Zihao Lin 
+
+Description:
+        0. check how to use composer - check live example on stackoverflow 2
+        1. install composer - download composer and make it usable globally 1
+        2. Add monolog - install monolog/monolog to this current project 2
+        
+Discussion:
+    
+----------------11/16/2020--------------------------------------------------------------
+        3. fix dependency - add autoload.php to the files headers 1 
+----------------11/17/2020--------------------------------------------------------------
+        4. fix bug in php backend - some cant properly retirive data from POST. 2 
+        5. create html main page with css styling sheet 
+----------------11/19/2020---------------------------------------------------------------
+        7. create javascript to split image and generate random array
+        8. write js function to swap tiles
+        9. create php backend to check for image type and size
+        10. write php to write to active_image.txt
+        11. write php to save image to active_image.jpg
+        12. write php to log file uploads
+        
+Discussion:
+        
